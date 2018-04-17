@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -15,7 +16,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -29,7 +30,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,25 +41,58 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.38</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.8.0</version>
+		</dependency>
+
+	<!-- 	<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.querydsl</groupId>
+			<artifactId>querydsl-apt</artifactId>
+		</dependency> -->
 		
-		 <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.8.0</version>
+		<dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-spatial</artifactId>
+            <version>4.2.1</version>
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.8.0</version>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-spatial</artifactId>
+            <version>4.2.1</version>
         </dependency>
-		
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-spring</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
 	</dependencies>
 
 	<build>
@@ -67,6 +101,58 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			 <plugin>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>4.2.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+                    <jdbcUrl>jdbc:mysql://localhost:3306/jpatest</jdbcUrl>
+                    <jdbcUser>root</jdbcUser>
+                    <jdbcPassword>root</jdbcPassword>
+                    <targetFolder>src/main/java</targetFolder>
+                    <packageName>com.jpatest.models</packageName>
+                    <namePrefix>Q</namePrefix>
+                    <spatial>true</spatial>
+                    <lowerCase>true</lowerCase>
+                    <sourceFolder>src</sourceFolder>
+                    <exportBeans>true</exportBeans>
+                    <beanAddToString>true</beanAddToString>
+                    <beanPackageName>com.jpatest.models</beanPackageName>
+                </configuration>
+                <dependencies>
+                    	<dependency>
+							<groupId>mysql</groupId>
+							<artifactId>mysql-connector-java</artifactId>
+							<version>5.1.38</version>
+						</dependency>
+                </dependencies>
+            </plugin>
+
+			<!-- <plugin>  
+                <groupId>com.mysema.maven</groupId>  
+                <artifactId>apt-maven-plugin</artifactId>  
+                <version>1.1.3</version>  
+                <executions>  
+                    <execution>  
+                        <goals>  
+                            <goal>process</goal>  
+                        </goals>  
+                        <configuration>  
+                            <outputDirectory>target/generated-sources/java</outputDirectory>  
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>  
+                        </configuration>  
+                    </execution>  
+                </executions>  
+            </plugin>   -->
 		</plugins>
 	</build>
 

@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jpatest.entity.Test;
+import com.jpatest.models.QTest;
+import com.jpatest.models.Test;
 import com.jpatest.repository.TestRepository;
+import com.querydsl.core.types.Predicate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,9 +53,22 @@ public class TestController {
 	
 	@PostMapping("/get/{userId}")
 	@ApiOperation("新增")
-	public Optional<Test> add(@PathVariable("userId") String userId){
+	public Optional<Test> get(@PathVariable("userId") int userId){
 		
 		Optional<Test> t=testRepository.findById(userId);
+		
+		return t;
+	}
+	
+	@PostMapping("/search")
+	@ApiOperation("按名称查询")
+	public Iterable<Test> search(String name){
+		
+		QTest qt=QTest.test;
+		
+		Predicate predicate =qt.name.eq(name);
+		
+		Iterable<Test> t=testRepository.findAll(predicate);
 		
 		return t;
 	}
