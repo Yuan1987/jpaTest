@@ -59,4 +59,17 @@ public class TestServiceImpl implements TestService {
 		return list;
 	}
 
+	@Override
+	public Test getByQueryId(int id) {
+		return testDao.QuerybySql(id);
+	}
+
+	@Override
+	public Page<Test> getListBySql(int page, int size, int id) {
+		
+		Pageable pageable = PageRequest.of(page - 1, size);
+		
+		return testDao.QueryPageBySql(id, pageable);
+	}
+
 }

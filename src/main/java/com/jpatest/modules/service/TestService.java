@@ -16,5 +16,9 @@ public interface TestService {
 	public Page<Test> getList(int page,int size);
 	
 	public List<Test> getByName(String name);
+	
+	public Test getByQueryId(int id);
+	
+	public Page<Test> getListBySql(int page,int size,int id);
 
 }

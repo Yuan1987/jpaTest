@@ -60,5 +60,21 @@ public class TestController {
 		
 		return t;
 	}
+	
+	@PostMapping("/getBySql/{userId}")
+	@ApiOperation("精确查询")
+	public Test getBySql(@PathVariable("userId") int userId){
+		
+		return testService.getByQueryId(userId);
+	}
+	
+	@ApiOperation("自定义sql查询")
+	@GetMapping("/listBysql")
+	public Page<Test> testSQL(int page,int size,int id){
+		
+		Page<Test> list= testService.getListBySql(page, size, id);
+		
+		return list;
+	}
 
 }
