@@ -126,7 +126,7 @@
                     <sourceFolder>src</sourceFolder>
                     <exportBeans>true</exportBeans>
                     <beanAddToString>true</beanAddToString>
-                    <beanPackageName>com.jpatest.models</beanPackageName>
+                    <beanPackageName>com.jpatest.modules.models</beanPackageName>
                 </configuration>
                 <dependencies>
                     	<dependency>

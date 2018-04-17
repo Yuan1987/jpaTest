@@ -1,4 +1,4 @@
-package com.jpatest.models;
+package com.jpatest.modules.models;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
