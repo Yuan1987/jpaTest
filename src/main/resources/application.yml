@@ -6,10 +6,9 @@ spring:
     password: root
     
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
-      multiTenancy: database
-
 server:
   port: 8081
