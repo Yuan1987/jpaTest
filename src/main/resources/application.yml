@@ -1,7 +1,7 @@
 spring: 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jpatest
+    url: jdbc:mysql://192.168.23.16:3306/jpatest
     username: root
     password: root
     
@@ -9,6 +9,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+      multiTenancy: database
 
 server:
   port: 8081
