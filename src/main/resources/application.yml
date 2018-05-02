@@ -4,6 +4,18 @@ spring:
     url: jdbc:mysql://192.168.23.16:3306/jpatest
     username: root
     password: root
+  cache:
+    type: redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 8 # pool settings ...
+        min-idle: 1
+        max-active: 8
+        max-wait: -1
+    database: 0
     
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect

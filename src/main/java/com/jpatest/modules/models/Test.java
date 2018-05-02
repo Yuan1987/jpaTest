@@ -1,5 +1,7 @@
 package com.jpatest.modules.models;
 
+import java.io.Serializable;
+
 import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +11,12 @@ import javax.persistence.Id;
  */
 @Generated("com.querydsl.codegen.BeanSerializer")
 @Entity
-public class Test {
+public class Test implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
     private Integer id;

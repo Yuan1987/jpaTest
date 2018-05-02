@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,9 @@ import io.swagger.annotations.ApiOperation;
 public class TestController {
 	
 	@Autowired
+	private ValueOperations<String,Object> valueOperations;
+	
+	@Autowired
 	private TestService testService;
 	
 	@ApiOperation("查询")
@@ -39,6 +43,8 @@ public class TestController {
 	@PostMapping("/add")
 	@ApiOperation("新增")
 	public int add(Test test){
+		
+		//valueOperations.set("1222",test);
 		
 		return testService.add(test);
 	}
@@ -75,6 +81,16 @@ public class TestController {
 		Page<Test> list= testService.getListBySql(page, size, id);
 		
 		return list;
+	}
+	
+
+	@GetMapping("/delete/{id}")
+	@ApiOperation("精确删除")
+	public boolean deleteById(@PathVariable("id") int id){
+		
+		testService.deleteById(id);
+		
+		return true;
 	}
 
 }

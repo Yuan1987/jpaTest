@@ -23,5 +23,7 @@ public interface TestService {
 	public Test getByQueryId(int id);
 	
 	public Page<Test> getListBySql(int page,int size,int id);
+	
+	void deleteById(int id);
 
 }
