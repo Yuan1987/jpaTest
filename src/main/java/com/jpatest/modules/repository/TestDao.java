@@ -9,12 +9,28 @@ import org.springframework.data.repository.query.Param;
 
 import com.jpatest.modules.models.Test;
 
+/**
+ * @author Yuan
+ *
+ */
 public interface TestDao extends JpaRepository<Test, Integer>,QuerydslPredicateExecutor<Test>{
 	
+	/**
+	 * 精确查询
+	 * @param id id 
+	 * @return Test
+	 */
 	@Query(value="select id,name from test where id=?1",nativeQuery=true)
-	Test QuerybySql(@Param("id") int id);
+	Test querybySql(@Param("id") int id);
 	
+	/**
+     * fetch data by rule id
+     * 
+     * @param id rule id
+     * @param pageable page number
+     * @return Page<Test>
+     */
 	@Query(value="select id,name from test where id=?1",nativeQuery=true,countQuery="select count(1) from test where id=?1")
-	Page<Test> QueryPageBySql(@Param("id") int id,Pageable pageable);
+	Page<Test> queryPageBySql(@Param("id") int id,Pageable pageable);
 	
 }

@@ -17,6 +17,10 @@ import com.jpatest.modules.models.Test;
 import com.jpatest.modules.repository.TestDao;
 import com.jpatest.modules.service.TestService;
 
+/**
+ * @author Yuan
+ *
+ */
 @Service
 public class TestServiceImpl implements TestService {
 
@@ -61,7 +65,7 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public Test getByQueryId(int id) {
-		return testDao.QuerybySql(id);
+		return testDao.querybySql(id);
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class TestServiceImpl implements TestService {
 		
 		Pageable pageable = PageRequest.of(page - 1, size);
 		
-		return testDao.QueryPageBySql(id, pageable);
+		return testDao.queryPageBySql(id, pageable);
 	}
 
 }

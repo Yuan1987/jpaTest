@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * @author yuanhangbiao
+ * @author Yuan
  */
 @RestController
 @RequestMapping("/test")

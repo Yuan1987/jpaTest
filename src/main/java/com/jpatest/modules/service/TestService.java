@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 
 import com.jpatest.modules.models.Test;
 
+/**
+ * @author Yuan
+ */
 public interface TestService {
 	
 	public int add(Test test);
