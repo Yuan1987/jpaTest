@@ -101,8 +101,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-		<!-- 	
-			 <plugin>
+			
+			<!-- querydsl 生成 <plugin>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-maven-plugin</artifactId>
                 <version>4.2.1</version>
@@ -119,7 +119,7 @@
                     <jdbcUser>root</jdbcUser>
                     <jdbcPassword>root</jdbcPassword>
                     <targetFolder>src/main/java</targetFolder>
-                    <packageName>com.jpatest.models</packageName>
+                    <packageName>com.jpatest.modules.models</packageName>
                     <namePrefix>Q</namePrefix>
                     <spatial>true</spatial>
                     <lowerCase>true</lowerCase>

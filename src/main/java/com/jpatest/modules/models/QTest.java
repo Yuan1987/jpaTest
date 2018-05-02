@@ -1,17 +1,19 @@
 package com.jpatest.modules.models;
 
-import static com.querydsl.core.types.PathMetadataFactory.forVariable;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+
+import com.querydsl.sql.ColumnMetadata;
 import java.sql.Types;
 
-import javax.annotation.Generated;
-
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.PathMetadata;
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.StringPath;
-import com.querydsl.sql.ColumnMetadata;
 import com.querydsl.sql.spatial.RelationalPathSpatial;
+
+import com.querydsl.spatial.*;
 
 
 
@@ -21,7 +23,7 @@ import com.querydsl.sql.spatial.RelationalPathSpatial;
 @Generated("com.querydsl.sql.codegen.MetaDataSerializer")
 public class QTest extends RelationalPathSpatial<Test> {
 
-    private static final long serialVersionUID = -1618351032;
+    private static final long serialVersionUID = 1504314977;
 
     public static final QTest test = new QTest("test");
 

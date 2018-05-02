@@ -1,17 +1,13 @@
 package com.jpatest.modules.models;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 /**
  * Test is a Querydsl bean type
  */
 @Generated("com.querydsl.codegen.BeanSerializer")
-@Entity
 public class Test {
 
-	@Id
     private Integer id;
 
     private String name;
