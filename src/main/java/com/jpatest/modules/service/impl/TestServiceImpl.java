@@ -49,7 +49,7 @@ public class TestServiceImpl implements TestService {
 	}
 
 	@Override
-	@Cacheable
+//	@Cacheable
 	public Page<Test> getList(int page, int size) {
 
 		Pageable pageable = PageRequest.of(page - 1, size);
