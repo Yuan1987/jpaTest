@@ -149,6 +149,15 @@
 						</resource>
 					</resources>
 				</configuration>
+				<executions>
+                    <execution>
+                        <id>build-image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 
 		</plugins>
