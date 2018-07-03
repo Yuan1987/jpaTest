@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,77 +23,94 @@ import com.jpatest.modules.models.QTest;
 import com.jpatest.modules.models.Test;
 import com.jpatest.modules.repository.TestDao;
 import com.jpatest.modules.service.TestService;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 /**
  * @author Yuan
  *
  */
 @Service
-@CacheConfig(cacheNames="Test")
+@CacheConfig(cacheNames = "Test")
 public class TestServiceImpl implements TestService {
 
-	@Autowired
-	private TestDao testDao;
+    @Autowired
+    private TestDao testDao;
 
-	@Override
-	@Transactional
-	@CachePut
-	public int add(Test test) {
-		return testDao.save(test).getId();
-	}
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
 
-	@Override
-	@Cacheable
-	public Optional<Test> getById(int id) {
+    private JPAQueryFactory queryFactory;
 
-		Optional<Test> t = testDao.findById(id);
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(entityManager);
+    }
 
-		return t;
-	}
+    @Override
+    @Transactional
+    @CachePut
+    public int add(Test test) {
 
-	@Override
-//	@Cacheable
-	public Page<Test> getList(int page, int size) {
+        return testDao.save(test).getId();
+    }
 
-		Pageable pageable = PageRequest.of(page - 1, size);
+    @Override
+    @Cacheable
+    public Optional<Test> getById(int id) {
 
-		return testDao.findAll(pageable);
-	}
+        // Test test =
+        // queryFactory.select(QTest.test).from(QTest.test).where(QTest.test.id.eq(id)).fetchFirst();
 
-	@Override
-	@Cacheable
-	public List<Test> getByName(String name) {
+        Optional<Test> t = testDao.findById(id);
 
-		QTest q = QTest.test;
+        return t;
+    }
 
-		Iterable<Test> it = testDao.findAll(q.name.eq(name));
+    @Override
+    // @Cacheable
+    public Page<Test> getList(int page, int size) {
 
-		List<Test> list = new ArrayList<>();
-		
-		it.forEach(t->list.add(t));
+        Pageable pageable = PageRequest.of(page - 1, size);
 
-		return list;
-	}
+        return testDao.findAll(pageable);
+    }
 
-	@Override
-	@Cacheable
-	public Test getByQueryId(int id) {
-		return testDao.querybySql(id);
-	}
+    @Override
+    @Cacheable
+    public List<Test> getByName(String name) {
 
-	@Override
-	@Cacheable
-	public Page<Test> getListBySql(int page, int size, int id) {
-		
-		Pageable pageable = PageRequest.of(page - 1, size);
-		
-		return testDao.queryPageBySql(id, pageable);
-	}
-	
-	@Override
-	@CacheEvict(key="#p0")
-	public void deleteById(int id) {
-		testDao.deleteById(id);;
-	}
+        QTest q = QTest.test;
+
+        Iterable<Test> it = testDao.findAll(q.name.eq(name));
+
+        List<Test> list = new ArrayList<>();
+
+        it.forEach(t -> list.add(t));
+
+        return list;
+    }
+
+    @Override
+    @Cacheable
+    public Test getByQueryId(int id) {
+        return testDao.querybySql(id);
+    }
+
+    @Override
+    @Cacheable
+    public Page<Test> getListBySql(int page, int size, int id) {
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        return testDao.queryPageBySql(id, pageable);
+    }
+
+    @Override
+    @CacheEvict(key = "#p0")
+    public void deleteById(int id) {
+        testDao.deleteById(id);
+        ;
+    }
 
 }

@@ -7,7 +7,7 @@ spring:
   cache:
     type: redis
   redis:
-    host: 127.0.0.1
+    host: 192.168.21.47
     port: 6379
     timeout: 1500
     jedis:

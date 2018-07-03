@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +24,6 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/test")
 @Api(tags= {"测试jpa"})
 public class TestController {
-	
-	@Autowired
-	private ValueOperations<String,Object> valueOperations;
 	
 	@Autowired
 	private TestService testService;
@@ -49,7 +46,7 @@ public class TestController {
 		return testService.add(test);
 	}
 	
-	@PostMapping("/get/{userId}")
+	@GetMapping("/{userId}")
 	@ApiOperation("精确查询")
 	public Optional<Test> get(@PathVariable("userId") int userId){
 		
@@ -58,7 +55,7 @@ public class TestController {
 		return t;
 	}
 	
-	@PostMapping("/search")
+	@GetMapping("/search")
 	@ApiOperation("按名称查询")
 	public Iterable<Test> search(String name){
 		
@@ -67,7 +64,7 @@ public class TestController {
 		return t;
 	}
 	
-	@PostMapping("/getBySql/{userId}")
+	@GetMapping("/getBySql/{userId}")
 	@ApiOperation("精确查询")
 	public Test getBySql(@PathVariable("userId") int userId){
 		
@@ -84,7 +81,7 @@ public class TestController {
 	}
 	
 
-	@GetMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@ApiOperation("精确删除")
 	public boolean deleteById(@PathVariable("id") int id){
 		
