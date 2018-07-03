@@ -51,6 +51,10 @@ public class TestServiceImpl implements TestService {
     @Transactional
     @CachePut
     public int add(Test test) {
+        
+        entityManager.persist(test);
+        entityManager.flush();
+        entityManager.clear();
 
         return testDao.save(test).getId();
     }
