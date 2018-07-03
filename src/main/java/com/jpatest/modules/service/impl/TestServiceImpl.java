@@ -1,6 +1,7 @@
 package com.jpatest.modules.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,9 +21,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.jpatest.modules.models.QTest;
+import com.jpatest.modules.models.QTest2;
 import com.jpatest.modules.models.Test;
+import com.jpatest.modules.models.Test2;
+import com.jpatest.modules.models.TestVo;
+import com.jpatest.modules.repository.Test2Dao;
 import com.jpatest.modules.repository.TestDao;
 import com.jpatest.modules.service.TestService;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 /**
@@ -35,6 +43,9 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     private TestDao testDao;
+    
+    @Autowired
+    private Test2Dao test2Dao;
 
     @Autowired
     @PersistenceContext
@@ -52,10 +63,11 @@ public class TestServiceImpl implements TestService {
     @CachePut
     public int add(Test test) {
         
-        entityManager.persist(test);
-        entityManager.flush();
-        entityManager.clear();
-
+        Test2 test2 =new Test2();
+        test2.setId(test.getId());
+        test2.setText("ceshi");
+        test2Dao.save(test2);
+        
         return testDao.save(test).getId();
     }
 
@@ -63,8 +75,7 @@ public class TestServiceImpl implements TestService {
     @Cacheable
     public Optional<Test> getById(int id) {
 
-        // Test test =
-        // queryFactory.select(QTest.test).from(QTest.test).where(QTest.test.id.eq(id)).fetchFirst();
+        //Test test = queryFactory.select(QTest.test).from(QTest.test).where(QTest.test.id.eq(id)).fetchFirst();
 
         Optional<Test> t = testDao.findById(id);
 
@@ -85,7 +96,7 @@ public class TestServiceImpl implements TestService {
     public List<Test> getByName(String name) {
 
         QTest q = QTest.test;
-
+        
         Iterable<Test> it = testDao.findAll(q.name.eq(name));
 
         List<Test> list = new ArrayList<>();
@@ -114,7 +125,24 @@ public class TestServiceImpl implements TestService {
     @CacheEvict(key = "#p0")
     public void deleteById(int id) {
         testDao.deleteById(id);
-        ;
+    }
+    
+    @Override
+    public TestVo getTestVoById(int id) {
+        
+        Path<?> [] path = QTest.test.all();
+        
+        List<Path<?>> list = new ArrayList<Path<?>>();
+        
+        list.addAll(Arrays.asList(path));
+        
+        list.add(QTest2.test2.text);
+        
+        path = list.toArray(new Path[0]);
+        
+        TestVo vo = queryFactory.select(Projections.bean(TestVo.class,path)).from(QTest.test,QTest2.test2).where(QTest.test.id.eq(QTest2.test2.id)).fetchFirst();
+        
+        return vo;
     }
 
 }

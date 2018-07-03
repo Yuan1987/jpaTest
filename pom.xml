@@ -88,10 +88,8 @@
 			<version>4.2.1</version>
 		</dependency>
 
-	<!-- 	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-cache</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -106,16 +104,40 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- querydsl 生成 <plugin> <groupId>com.querydsl</groupId> <artifactId>querydsl-maven-plugin</artifactId> 
-				<version>4.2.1</version> <executions> <execution> <goals> <goal>test-export</goal> 
-				</goals> </execution> </executions> <configuration> <jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver> 
-				<jdbcUrl>jdbc:mysql://localhost:3306/jpatest</jdbcUrl> <jdbcUser>root</jdbcUser> 
-				<jdbcPassword>root</jdbcPassword> <targetFolder>src/main/java</targetFolder> 
-				<packageName>com.jpatest.modules.models</packageName> <namePrefix>Q</namePrefix> 
-				<spatial>true</spatial> <lowerCase>true</lowerCase> <sourceFolder>src</sourceFolder> 
-				<exportBeans>true</exportBeans> <beanAddToString>true</beanAddToString> <beanPackageName>com.jpatest.modules.models</beanPackageName> 
-				</configuration> <dependencies> <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-				<version>5.1.38</version> </dependency> </dependencies> </plugin> -->
+			<plugin>
+				<groupId>com.querydsl</groupId>
+				<artifactId>querydsl-maven-plugin</artifactId>
+				<version>4.2.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-export</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
+					<jdbcUrl>jdbc:mysql://localhost:3306/jpatest</jdbcUrl>
+					<jdbcUser>root</jdbcUser>
+					<jdbcPassword>root</jdbcPassword>
+					<targetFolder>src/main/java</targetFolder>
+					<packageName>com.jpatest.modules.models</packageName>
+					<namePrefix>Q</namePrefix>
+					<spatial>true</spatial>
+					<lowerCase>true</lowerCase>
+					<sourceFolder>src</sourceFolder>
+					<exportBeans>true</exportBeans>
+					<beanAddToString>true</beanAddToString>
+					<beanPackageName>com.jpatest.modules.models</beanPackageName>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.38</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 
 			<!-- <plugin> <groupId>com.mysema.maven</groupId> <artifactId>apt-maven-plugin</artifactId> 
 				<version>1.1.3</version> <executions> <execution> <goals> <goal>process</goal> 
@@ -137,7 +159,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.13</version>
 				<configuration>
-				    <dockerHost>http://192.168.21.47:2375</dockerHost>
+					<dockerHost>http://192.168.21.47:2375</dockerHost>
 					<imageName>jpa-test</imageName>
 					<dockerDirectory>${basedir}/docker</dockerDirectory> <!-- 指定 Dockerfile 路径 -->
 					<!-- 这里是复制 jar 包到 docker 容器指定目录配置，也可以写到 Docokerfile 中 -->
@@ -150,14 +172,14 @@
 					</resources>
 				</configuration>
 				<executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
+					<execution>
+						<id>build-image</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>

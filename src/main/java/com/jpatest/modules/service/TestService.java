@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 
 import com.jpatest.modules.models.Test;
+import com.jpatest.modules.models.TestVo;
 
 /**
  * @author Yuan
@@ -25,5 +26,7 @@ public interface TestService {
 	public Page<Test> getListBySql(int page,int size,int id);
 	
 	void deleteById(int id);
+	
+	TestVo getTestVoById(int id);
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jpatest.modules.models.Test;
+import com.jpatest.modules.models.TestVo;
 import com.jpatest.modules.service.TestService;
 
 import io.swagger.annotations.Api;
@@ -54,6 +55,15 @@ public class TestController {
 		
 		return t;
 	}
+	
+	@GetMapping("/vo/{userId}")
+    @ApiOperation("精确查询")
+    public TestVo getVo(@PathVariable("userId") int userId){
+        
+	    TestVo t=testService.getTestVoById(userId);
+        
+        return t;
+    }
 	
 	@GetMapping("/search")
 	@ApiOperation("按名称查询")
