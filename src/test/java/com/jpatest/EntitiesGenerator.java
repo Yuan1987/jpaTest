@@ -1,6 +1,9 @@
 package com.jpatest;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
@@ -41,5 +44,22 @@ public class EntitiesGenerator {
             e.printStackTrace();
         }
 
+    }
+    
+    public static void main(String [] a){
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.21.43:3306/jpatest", "root", "root");
+            
+            DatabaseMetaData metaData = con.getMetaData();
+
+            System.out.println(metaData.getSQLKeywords());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 }
