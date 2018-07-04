@@ -130,9 +130,9 @@ public class TestServiceImpl implements TestService {
     @Override
     public TestVo getTestVoById(int id) {
         
-        Path<?> [] path = QTest.test.all();
+        Expression<?> [] path = QTest.test.all();
         
-        List<Path<?>> list = new ArrayList<Path<?>>();
+        List<Expression<?>> list = new ArrayList<Expression<?>>();
         
         list.addAll(Arrays.asList(path));
         
