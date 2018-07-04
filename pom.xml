@@ -94,6 +94,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>com.querydsl</groupId>
+		    <artifactId>querydsl-sql-codegen</artifactId>
+		    <version>4.2.1</version>
+		</dependency>
 
 	</dependencies>
 
