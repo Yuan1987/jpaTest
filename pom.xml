@@ -115,11 +115,11 @@
 				<artifactId>querydsl-maven-plugin</artifactId>
 				<version>4.2.1</version>
 				<executions>
-					<execution>
+					<!-- <execution>
 						<goals>
 							<goal>test-export</goal>
 						</goals>
-					</execution>
+					</execution> -->
 				</executions>
 				<configuration>
 					<jdbcDriver>com.mysql.jdbc.Driver</jdbcDriver>
