@@ -78,7 +78,3 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
     --env ZK_CONNECT=kafka7zookeeper:2181/root/path \
     --env GROUP_ID=mymirror \
     spotify/kafkaproxy
-    
-docker run --name logstash --privileged --restart=always -d -ti -v /Logstash/data:/opt/product/data -p 5044:5044 -p 4560:4560 -p 18080:8080 logstash
-docker run -dit --name elasticsearch  --hostname  elasticsearch-host  -v /data:/data -p 9200:9200 -p 9300:9300 elasticsearch:latest
-docker run -dit --name kibana  --hostname  kibana-host  -v /data:/data -p 5601:5601 -e ELASTICSEARCH_URL=http://192.168.248.143:9200  kibana:latest

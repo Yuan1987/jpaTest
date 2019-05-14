@@ -1,0 +1,8 @@
+#docker 配置
+cluster.name: my-application
+node.name: node-1
+network.host: 0.0.0.0 
+http.port: 9200
+node.master: true
+network.publish_host: 192.168.248.171
+discovery.zen.ping.unicast.hosts: ["192.168.248.171:9300"]

@@ -1,6 +1,5 @@
-docker run -dit --name elasticsearch  --hostname  elasticsearch-host  -v /data:/data -p 9200:9200 -p 9300:9300 elasticsearch:latest
+docker run -dit --name elasticsearch  --hostname  elasticsearch-host  -v /data:/data -p 9200:9200 -p 9300:9300 -v /opt/es/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:latest
 docker run -dit --name kibana  --hostname  kibana-host  -v /data:/data -p 5601:5601 -e ELASTICSEARCH_URL=http://192.168.248.144:9200  kibana:latest
-
 
 
 新建logstash文件夹，并在其下新建config、pipeline两个文件夹

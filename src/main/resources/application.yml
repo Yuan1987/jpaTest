@@ -1,15 +1,16 @@
 spring: 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.248.134:3307/jpatest
+    url: jdbc:mysql://192.168.248.165:3307/jpatest?useSSL=false
     username: root
     password: 123456
   cache:
     type: redis
   redis:
-    host: 192.168.248.134
-    port: 6379
+    host: 192.168.248.165
+    port: 6380
     timeout: 1500
+    password: 
     jedis:
       pool:
         max-idle: 8 # pool settings ...
