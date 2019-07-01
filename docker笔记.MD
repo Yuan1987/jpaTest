@@ -24,6 +24,10 @@ docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins --privileged=true \
 -v /usr/bin/docker:/usr/bin/docker \
 -v /usr/lib64/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7  jenkins
 sudo chown -R 1000:1000 jenkins
+sudo chown -R 1000:1000 /var/run/docker.sock
+
+
+ssh-keygen -t rsa -C "tony@rhmg.cx"
 
 
 docker logs xxx
