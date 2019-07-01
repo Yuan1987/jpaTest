@@ -26,9 +26,11 @@ docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins --privileged=true \
 sudo chown -R 1000:1000 jenkins
 sudo chown -R 1000:1000 /var/run/docker.sock
 
-
+#git ssh key
 ssh-keygen -t rsa -C "tony@rhmg.cx"
 
+#maven 指定子项目
+-pl medical-user -am clean install
 
 docker logs xxx
 
