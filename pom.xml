@@ -177,7 +177,7 @@
 						</resource>
 					</resources>
 				</configuration>
-				<executions>
+				<!-- <executions>
 					<execution>
 						<id>build-image</id>
 						<phase>install</phase>
@@ -185,7 +185,7 @@
 							<goal>build</goal>
 						</goals>
 					</execution>
-				</executions>
+				</executions> -->
 			</plugin>
 
 		</plugins>
