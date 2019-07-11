@@ -1,4 +1,3 @@
-#!/bin/sh
 #docker 镜像/容器名字
 SERVER_NAME=jpa-test
 BASE_PATH=docker/
