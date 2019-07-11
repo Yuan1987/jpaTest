@@ -1,9 +1,13 @@
 #docker 镜像/容器名字或者jar名字 这里都命名为这个
-SERVER_NAME=rhmg-commission
+SERVER_NAME=jpa-test
+BASE_PATH=docker/
+
+cp target/JpaTest-0.1.jar $BASE_PATH
+
 #容器id
 CID=$(docker ps -a | grep "$SERVER_NAME" | awk '{print $1}')
 #镜像id
-IID=$(docker images | grep "none" | awk '{print $3}')
+IID=$(docker images | grep "$SERVER_NAME" | awk '{print $3}')
 
 # 删除docker容器
 if [ -n "$CID" ]; then
@@ -22,6 +26,9 @@ else
         echo "不存在已废弃镜像"
 fi
 
+cd $BASE_PATH
+docker build -t  $SERVER_NAME .
+
 # 运行docker容器
-docker run --name $SERVER_NAME -d -p 9026:9026 -v /opt/rhmg:/opt/rhmg $SERVER_NAME
+docker run --name $SERVER_NAME -e SPRING_PROFILES_ACTIVE="dev" -d -p 8081:8081 $SERVER_NAME
 echo "$SERVER_NAME容器创建完成"
