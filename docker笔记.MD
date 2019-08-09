@@ -16,7 +16,16 @@ docker rmi
 
 
 #mysql
-docker run --name mysql5.7 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=123456 -d registry.cn-hangzhou.aliyuncs.com/hhzz/mysql
+docker run --name mysql5.7 -p 3308:3306 -e MYSQL_ROOT_PASSWORD=tkaZtvF8jjXo83xqdAJDu0Gj1KEkGWbh -d registry.cn-hangzhou.aliyuncs.com/hhzz/mysql
+
+docker run -p 3307:3306 --name mysql8 \
+-v /alidata1/mysql8/logs:/logs  \
+-v /alidata1/mysql8/my.cnf:/etc/mysql/conf.d   \
+-v /alidata1/mysql8/data:/var/lib/mysql  \
+-e MYSQL_ROOT_PASSWORD=tkaZtvF8jjXo83xqdAJDu0Gj1KEkGWbh -d mysql
+
+docker run  -d --name mysql -v /aldata1/mysql8/data:/var/lib/mysql -v /etc/mysql/my.cnf:/etc/mysql/my.cnf -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:tag
+
 docker run -it --name jpa-test -p 8081:8081 -d jpa-test
 docker run -itd -p 8080:8080 -p 50000:50000 --name jenkins --privileged=true \
 -v /opt/jenkins:/var/jenkins_home \
@@ -70,8 +79,8 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
 	docker run  --name kafka \
 	-p 9092:9092 \
 	-e KAFKA_BROKER_ID=0 \
-	-e KAFKA_ZOOKEEPER_CONNECT=127.0.0.1:2181 \
-	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092 \
+	-e KAFKA_ZOOKEEPER_CONNECT=192.168.50.196:2181 \
+	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.50.196:9092 \
 	-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
 
 	
@@ -84,3 +93,6 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
     --env ZK_CONNECT=kafka7zookeeper:2181/root/path \
     --env GROUP_ID=mymirror \
     spotify/kafkaproxy
+    
+    
+       

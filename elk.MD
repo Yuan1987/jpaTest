@@ -1,7 +1,31 @@
 docker run -dit --name elasticsearch  --hostname  elasticsearch-host  -v /data:/data -p 9200:9200 -p 9300:9300 -v /opt/es/es.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:latest
-docker run -dit --name kibana  --hostname  kibana-host  -v /data:/data -p 5601:5601 -e ELASTICSEARCH_URL=http://192.168.248.144:9200  kibana:latest
+#docker run -dit --name kibana  --hostname  kibana-host  -v /data:/data -v /opt/es/kibana.yml:/etc/kibana/kibana.yml -p 5601:5601 kibana:latest
+docker run -itd --name kibana -p 5601:5601 --link elasticsearch -e ELASTICSEARCH_URL=http://elasticsearch:9200 kibana:latest
 
-docker run -dit --name kibana  --hostname  kibana-host  -v /data:/data -v /opt/es/kibana.yml:/etc/kibana/kibana.yml -p 5601:5601 kibana:latest
+docker run -itd --name logstash -p 4560:4560 --link elasticsearch -v /opt/logstash/pipeline/:/usr/share/logstash/pipeline/ -v /opt/logstash/config/:/usr/share/logstash/config/ logstash
+
+
+#kibana 本身没有密码权限控制 用nginx做
+1、
+server {
+  listen       80;
+  server_name localhost;
+  location / {
+     auth_basic "secret";
+     auth_basic_user_file /usr/local/nginx/db/passwd.db;
+     proxy_pass http://localhost:5601;
+     proxy_set_header Host $host:5601;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_set_header Via "nginx";
+  }
+}
+2、mkdir /usr/local/nginx/db
+
+3、安装 yum install -y httpd
+4、htpasswd -c /usr/local/nginx/db/passwd.db user
+5、htpasswd -b /usr/local/nginx/db/passwd.db admin tv4gVGllEQXIIgrA
+
 
 新建logstash文件夹，并在其下新建config、pipeline两个文件夹
 
@@ -59,4 +83,5 @@ output{
 
 
 
-docker run --rm -itd --name logstash -v /logstash/pipeline/:/usr/share/logstash/pipeline/ -v /logstash/config/:/usr/share/logstash/config/ logstash
+
+
