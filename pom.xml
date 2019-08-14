@@ -160,15 +160,15 @@
 				<include>${project.build.finalName}.jar</include> </resource> </resources> 
 				</configuration> </plugin> -->
 
-			<plugin>
+			<!-- <plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.4.13</version>
 				<configuration>
-					<!-- <dockerHost>http://127.0.0.1:2375</dockerHost> -->
+					<dockerHost>http://127.0.0.1:2375</dockerHost>
 					<imageName>jpa-test</imageName>
-					<dockerDirectory>${basedir}/docker</dockerDirectory> <!-- 指定 Dockerfile 路径
-					这里是复制 jar 包到 docker 容器指定目录配置，也可以写到 Docokerfile 中 -->
+					<dockerDirectory>${basedir}/docker</dockerDirectory> 指定 Dockerfile 路径
+					这里是复制 jar 包到 docker 容器指定目录配置，也可以写到 Docokerfile 中
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -186,7 +186,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 
 		</plugins>
 	</build>
