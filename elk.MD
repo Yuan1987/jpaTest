@@ -93,3 +93,10 @@ sudo service filebeat start
 或者通过命令 ./filebeat -e -M "nginx.access.var.paths=[/path/to/log/nginx/access.log*]" -M "nginx.error.var.paths=[/path/to/log/nginx/error.log*]"
 
 
+#nginx log
+log_format  main  '$remote_addr - $remote_user [$time_local] "$request  $request_body "'
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"  $http_X_Auth_Token';
+
+
+
