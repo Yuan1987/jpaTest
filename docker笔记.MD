@@ -16,7 +16,7 @@ docker rmi
 
 
 #mysql
-docker run --name mysql5.7 -p 3308:3306 -e MYSQL_ROOT_PASSWORD=tkaZtvF8jjXo83xqdAJDu0Gj1KEkGWbh -d registry.cn-hangzhou.aliyuncs.com/hhzz/mysql
+docker run --name mysql5.7 -v /alidata1/mysql5.7/data:/var/lib/mysql -p 3308:3306 -e MYSQL_ROOT_PASSWORD=tkaZtvF8jjXo83xqdAJDu0Gj1KEkGWbh -d registry.cn-hangzhou.aliyuncs.com/hhzz/mysql
 
 docker run -p 3307:3306 --name mysql8 \
 -v /alidata1/mysql8/logs:/logs  \

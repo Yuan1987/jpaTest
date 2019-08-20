@@ -94,9 +94,9 @@ sudo service filebeat start
 
 
 #nginx log
-log_format  main  '$remote_addr - $remote_user [$time_local] "$request  $request_body "'
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"  $http_X_Auth_Token';
+log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer $http_X_Auth_Token $request_body" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
 
 
 
