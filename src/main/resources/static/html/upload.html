@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>资料上传</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <style>
+    </style>
+    </head>
+</head>
+<body>
+     <div class="modal-content" >
+         <div class="modal-body">
+             <form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+                 <div class="form-group">
+                     <label class="col-sm-2 control-label">全景片：</label>
+                     <div class="col-sm-9">
+                         <div id="uploader-demo" >
+                             <!--用来存放item-->
+                             <div id="fileList" class="uploader-list"></div>
+                             <div id="filePicker">选择全景片</div>
+                         </div>
+                         <input id="fullViewPath" name="fullViewPath" type="hidden">
+                         <input id="fullViewWidth" name="fullViewWidth" type="hidden">
+                         <input id="fullViewHeight" name="fullViewHeight" type="hidden">
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label class="col-sm-2 control-label">CT文件：</label>
+                     <div class="col-sm-9">
+                         <div id="uploader-demo-ct" >
+                             <div class="progress-bar" style="width: 0%;"></div>
+                             <div id="fileList-ct" class="uploader-list">
+                             </div>
+                             <div id="filePicker-ct">上传文件</div>
+                         </div>
+                         <input id="ctFilePath" name="ctFilePath" type="hidden">
+                         <input id="ctFileName" name="ctFileName" type="hidden">
+                     </div>
+                 </div>
+             </form>
+         </div>
+         <div class="modal-footer" id="waitId">
+             <button type="button" id="saveButton" class="btn btn-primary">上传</button>
+         </div>
+     </div>
+    <!-- 全局js -->
+    <script src="../framework/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../framework/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../framework/js/plugins/layer/layer.min.js"></script>
+    <script src="../framework/js/plugins/webuploader/webuploader.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="../framework/js/content.js?v=1.0.0"></script>
+    <script src="../framework/js/common.js"></script>
+    <script src="orthodonticCheck.js?1"></script>
+
+
+    <script>
+
+        var fileGuid;
+        var fileUploadId;
+
+        // 上传CT文件
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: '../framework/js/plugins/webuploader/Uploader.swf',
+            // 文件接收服务端。
+            server: top.serverPicAddress+'/rest/minio/v1/uploadSliceImage',
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker-ct',
+            chunked: true,// 开启分片上传
+            chunkSize: 5 * 1024 * 1024,// 5M
+            chunkRetry: 3,// 错误重试次数
+            //formData: { "token": token},
+            formData: {"imageType": 1},
+            // fileSingleSizeLimit: 500*1024*1024,//限制上传单个文件大小 不超过100M
+            // 只允许选择文件类型
+            accept: {
+                title: 'Zips',
+                extensions: 'rar,zip',
+                mimeTypes: 'application/zip,application/rar'
+            },
+            duplicate:true //允许重复上传
+        });
+
+        uploader.on('uploadBeforeSend', function( object, data,header ) {
+            $('#saveButton').attr("disabled", true);
+            header.version='1.0';
+            data.uuid = fileGuid;
+            data.uploadId = fileUploadId;
+        });
+
+        uploader.on('uploadProgress', function(file, percentage) {
+            var percent = $('#uploader-demo-ct .progress-bar');
+            percent.css('width', percentage * 100 + '%');
+        });
+
+
+        uploader.on("error", function (type) {
+            $('#saveButton').attr("disabled", false);
+            if (type == "Q_TYPE_DENIED") {
+                layer.msg("请上传rar,zip格式文件",{
+                    time: 4000,
+                });
+            } else if (type == "Q_EXCEED_SIZE_LIMIT"||type=="F_EXCEED_SIZE") {
+                layer.msg("文件大小不能超过500M",{
+                    time: 4000,
+                });
+            }else {
+                layer.msg("上传出错！请检查后重新上传！错误代码"+type,{
+                    time: 4000,
+                });
+            }
+        });
+        uploader.on('uploadStart', function (file) {
+            var chunksTotal = Math.ceil(file.size / (5 * 1024 * 1024));
+            if (chunksTotal < 2) {
+                return;
+            }
+            // 这里同步获取uploadId
+            $.ajax({
+                type: "POST",
+                url: top.serverPicAddress + '/rest/minio/v1/getUploadId',
+                data: {
+                    uuid: fileGuid,      // 文件唯一标记
+                    imageType: 1,
+                    name: file.name,  // 当前分块下标
+                },
+                headers: {
+                    version: '1.0'
+                },
+                async : false,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status == 200) {
+                        fileUploadId = response.content;
+                    }
+                }
+            });
+
+        });
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            fileGuid = WebUploader.Base.guid();
+            $("#fileList-ct").html("");
+            var $lit = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '</div>'
+            );
+            $("#fileList-ct").append($lit);
+        });
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file ,response) {
+            $('#saveButton').attr("disabled", false);
+            if (!response.url) {
+
+                var chunksTotal = Math.ceil(file.size / (5 * 1024 * 1024));
+                if (chunksTotal > 1) {
+                    // 合并请求
+                    var deferred = WebUploader.Deferred();
+                    $.ajax({
+                        type: "POST",
+                        url: top.serverPicAddress + '/rest/minio/v1/mergeAndSaveChunks',
+                        data: {
+                            uuid: fileGuid,
+                            chunks: chunksTotal,
+                            imageType: 1,
+                            name: file.name,
+                            uploadId: fileUploadId
+                        },
+                        headers: {
+                            version: '1.0'
+                        },
+                        cache: false,
+                        dataType: "json",
+                        success: function (response) {
+                            if (response) {
+                                layer.msg(response.message);
+                                $("#ctFilePath").val(response.content);
+                                $("#ctFileName").val(file.name);
+                                $('#' + file.id).text(response.content);
+                            } else {
+                                deferred.reject();
+                            }
+                        }
+                    });
+                    return deferred.promise();
+                } else {
+                    layer.msg(response.message);
+                    $("#ctFilePath").val(response.content);
+                    $("#ctFileName").val(file.name);
+                    $('#' + file.id).text(response.content);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

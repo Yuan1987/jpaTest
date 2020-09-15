@@ -1,0 +1,33 @@
+https://rhmg-cms.oss-cn-hangzhou.aliyuncs.com/00891350-376e-452c-b931-a5bc5557d2f5.jpg?x-oss-process=image/watermark,size_15,t_50,color_000000,text_6ZqP6Lqr54mZ5Yy7
+https://rhmg-cms.oss-cn-hangzhou.aliyuncs.com/00891350-376e-452c-b931-a5bc5557d2f5.jpg?x-oss-process=x-oss-process%3Dimage%2Fwatermark%2Csize_15%2Ct_50%2Ccolor_000000%2Ctext_6ZqP6Lqr54mZ5Yy7
+
+
+
+
+
+
+
+
+
+
+rhmg-cms/913ed1fc-e4c0-4db5-bde5-c177ce2e0111.jpg
+
+{
+  "atts": [
+    {
+      "imageType": "PANORAMIC ",
+      "orderNo": 0,
+      "url": "rhmg-cms/913ed1fc-e4c0-4db5-bde5-c177ce2e0111.jpg"
+    }
+  ],
+  "birthDate": "2020-01-09",
+  "mobile": "13438018435",
+  "name": "1212",
+  "needReport": false,
+  "objectId": 0,
+  "patientId": 111,
+  "resource": "SELF",
+  "selfCheckType": "INTRAORAL",
+  "sex": "M",
+  "virtualUserId": 625699104479256580
+}

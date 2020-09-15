@@ -65,7 +65,6 @@ output {
 }
 
 
-
 1、curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.2.1-x86_64.rpm
 sudo rpm -vi filebeat-7.2.1-x86_64.rpm
 2、/etc/filebeat/filebeat.yml

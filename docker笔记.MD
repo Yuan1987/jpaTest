@@ -79,8 +79,8 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
 	docker run  --name kafka \
 	-p 9092:9092 \
 	-e KAFKA_BROKER_ID=0 \
-	-e KAFKA_ZOOKEEPER_CONNECT=192.168.50.196:2181 \
-	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.50.196:9092 \
+	-e KAFKA_ZOOKEEPER_CONNECT=192.168.50.154:2181 \
+	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.50.154:9092 \
 	-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
 
 	
@@ -94,5 +94,17 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
     --env GROUP_ID=mymirror \
     spotify/kafkaproxy
     
+    docker run --name kafka -d -p 2181:2181 -p 9092:9092 \
+    --env ADVERTISED_HOST=211.149.188.241 \
+    --env ADVERTISED_PORT=9092 \
+    --env CONSUMER_THREADS=1 \
+    --env TOPICS=my-topic,some-other-topic \
+    --env ZK_CONNECT=kafka7zookeeper:2181/root/path \
+    --env GROUP_ID=mymirror \
+    spotify/kafkaproxy
     
+    
+docker run -p 5672:5672 -p 15672:15672 --name rabbitmq -d rabbitmq:3.8.7-management
+
+docker run -p 27017:27017 --name mongo -v /mydata/mongo/db:/data/db -d mongo:4.2.5
        

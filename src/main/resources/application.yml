@@ -1,23 +1,26 @@
 spring: 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.248.165:3307/jpatest?useSSL=false
+    url: jdbc:mysql://192.168.50.196:3307/jpatest?useSSL=false
     username: root
     password: 123456
   cache:
     type: redis
+  mvc:
+    view:
+      suffix: .html
+      prefix: /
   redis:
-    host: 192.168.248.165
-    port: 6380
-    timeout: 1500
-    password: 
-    jedis:
-      pool:
-        max-idle: 8 # pool settings ...
-        min-idle: 1
-        max-active: 8
-        max-wait: -1
-    database: 0
+      host: 192.168.50.136
+      port: 6379
+      password:
+      timeout: 5000
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 10
+          max-wait: -1
+          min-idle: 0
     
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
