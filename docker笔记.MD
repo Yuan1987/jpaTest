@@ -79,8 +79,8 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
 	docker run  --name kafka \
 	-p 9092:9092 \
 	-e KAFKA_BROKER_ID=0 \
-	-e KAFKA_ZOOKEEPER_CONNECT=192.168.50.154:2181 \
-	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.50.154:9092 \
+	-e KAFKA_ZOOKEEPER_CONNECT=192.168.50.155:2181 \
+	-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.50.155:9092 \
 	-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 -t wurstmeister/kafka
 
 	
@@ -105,6 +105,7 @@ docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
     
     
 docker run -p 5672:5672 -p 15672:15672 --name rabbitmq -d rabbitmq:3.8.7-management
+#guest guest
 
 docker run -p 27017:27017 --name mongo -v /mydata/mongo/db:/data/db -d mongo:4.2.5
        
