@@ -1,17 +1,21 @@
-#systemctl start docker 
+#查看docker 配置文件位置
+systemctl show --property=FragmentPath docker
 
-#查看容器
-docker ps -a
+#
+补全：
 
-#删除容器
-docker rm 
+安装docker自带包：
 
-#docker start xxx
+source /usr/share/bash-completion/completions/docker
 
-#镜像
-docker images
+缺少下面的包，TAB会报错
 
-docker rmi
+yum install -y bash-completion
+
+chmod 755  /usr/share/bash-completion/bash_completion
+
+sh /usr/share/bash-completion/bash_completion
+
 
 
 
